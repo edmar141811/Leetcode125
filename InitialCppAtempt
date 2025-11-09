@@ -1,0 +1,70 @@
+/*
+Runtime 2 ms
+Beats 40.55%
+
+Memory 10.50 MB
+Beats 12.70%
+
+While the memory space is decent, the runtime is acceptable. Comments will be added soon, and I will probably try in java
+*/
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        bool test = true;
+        int forward = 0;
+        int back = s.size()-1;
+        int halfRun = s.size();
+        int case1=0;
+        int case2=0;
+        while(forward < back){
+            case1=s[forward];
+            case2=s[back];
+            //cout << tolower(s[forward],locale()) << " " << tolower(s[back],locale())<<"\n";
+            case1=tolower(s[forward],locale());
+            case2=tolower(s[back],locale());
+            //cout << case1 << " " << case2 <<"\n";
+            //cout << forward << " "<< back<<"\n"; 
+            if(case1==case2){
+                forward++;
+                back--;
+            }
+            else if ((case1<48&&case2<48)||((case1>57&&case1<97)&&(case2>57&&case2<97))){
+                forward++;
+                back--;
+            }
+            else if ((case1<48)||(case1>57&&case1<97)){
+                forward++;
+            }
+            else if((case2<48)||(case2>57&&case2<97)){
+                back--;
+            }
+            else if(((tolower(s[forward],locale())<58&&tolower(s[forward],locale())>47)||
+                (tolower(s[back],locale())<58&&tolower(s[back],locale())>47))){
+                    test = false;
+                    break;
+            }
+            else{
+                if((tolower(s[forward],locale())<96||tolower(s[forward],locale())>122)&&
+                (tolower(s[back],locale())<96||tolower(s[back],locale())>122)){
+                    forward++;
+                    back--;
+                }
+                else if(tolower(s[forward],locale())<96||tolower(s[forward],locale())>122){
+                    forward++;
+                }
+                else if(tolower(s[back],locale())<96||tolower(s[back],locale())>122){
+                    back--;
+                }
+                else{
+                    if(tolower(s[forward],locale())!=tolower(s[back],locale())){
+                        test=false;
+                        break;
+                    }
+                    forward++;
+                    back--;
+                }
+            }
+        }
+        return test;
+    }
+};
